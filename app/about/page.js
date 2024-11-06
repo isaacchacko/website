@@ -52,6 +52,18 @@ export default function About() {
               objectFit="cover"
               className={styles.profileImage}
             />
+            <div className={styles.subText}>
+              <p>
+                Email: <i>isaac.chacko05@tamu.edu</i>
+              </p>
+              <p>
+                Phone: Add +1 to each section of the phone number (to prevent web scraping), so 831 becomes 832 and so on.
+                <i>(831)-620-5770</i>
+              </p>
+              <p>
+                Discord: <i>isaacchacko</i>
+              </p>
+            </div>
           </div>
         </div>
         <div className="backToHome">
