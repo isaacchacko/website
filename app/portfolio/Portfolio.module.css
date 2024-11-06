@@ -1,0 +1,51 @@
+
+.bioContainer {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: auto;
+  width: auto;
+}
+
+.bioText {
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bioText h1 {
+  font-size: 4rem;
+  color: #AAAAAA;
+}
+
+.bioText p {
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+.bioLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5rem;
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.socialIcon {
+  width: 40px;
+  height: 40px;
+  margin: 0 1rem;
+  color: #7f8c8d;
+  transition: color 0.3s ease;
+}
+
+.socialIcon:hover {
+  color: #34495e;
+}
+

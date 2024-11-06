@@ -1,0 +1,140 @@
+
+.container {
+  background-color: #252525;
+  font-family: 'Jet Brains Mono', sans-serif;
+}
+
+.header {
+  background-color: #323232;
+  padding: 2rem;
+  text-align: center;
+}
+
+.howdy {
+  position: relative;
+  margin-bottom: 5rem;
+  font-size: 3rem;
+  color: #F3B61F;
+  color: #d49a0b;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 4px 4px 16px rgba(0, 0, 0, 1); /* X offset, Y offset, blur radius, color */
+}
+
+.howdyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  padding-bottom: 2rem;
+}
+
+.bioContainer {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: auto;
+  width: auto;
+}
+
+.bioText {
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bioText p {
+  padding-top: 5rem;
+  font-size: 2.5rem;
+  line-height: 1.6;
+  left: -50vw;
+  animation: slide ease 2s forwards;
+  position: relative;
+  opacity: 0%;
+}
+
+@keyframes slide {
+  to {
+    left: 0vw;
+  }
+  
+  0% {
+    opacity: 0%;
+  }
+  70% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+
+.bioLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5rem;
+}
+
+.profileImageContainer {
+  position: relative;
+  flex: 50%;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  height: auto;
+}
+
+.profileImage {
+  filter: drop-shadow(30px 30px 4px #a47708);
+  height: 714px;
+  animation: appear ease 2s forwards;
+  opacity: 0%;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0%;
+  }  
+  40% {
+    opacity: 0%;
+  }  
+  100% {
+    opacity: 100%;
+  }  
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.socialIcon {
+  width: 40px;
+  height: 40px;
+  margin: 0 1rem;
+  color: #7f8c8d;
+  transition: color 0.3s ease;
+}
+
+.socialIcon:hover {
+  color: #34495e;
+}
+
+.contactInfo {
+  display: flex;
+  min-height: 100px;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #7f8c8d;
+}
+
+.contactInfo p {
+  padding-bottom: 1rem;
+}

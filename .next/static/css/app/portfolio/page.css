@@ -1,0 +1,116 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[3]!./app/portfolio/Portfolio.module.css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************/
+
+.Portfolio_bioContainer__lzwO3 {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: auto;
+  width: auto;
+}
+
+.Portfolio_bioText__587x5 {
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Portfolio_bioText__587x5 h1 {
+  font-size: 4rem;
+  color: #AAAAAA;
+}
+
+.Portfolio_bioText__587x5 p {
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+.Portfolio_bioLeft__5nu_7 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5rem;
+}
+
+.Portfolio_socialLinks__dvoRn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.Portfolio_socialIcon__42hgh {
+  width: 40px;
+  height: 40px;
+  margin: 0 1rem;
+  color: #7f8c8d;
+  transition: color 0.3s ease;
+}
+
+.Portfolio_socialIcon__42hgh:hover {
+  color: #34495e;
+}
+
+
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[3]!./components/signatures/TitleSignature.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+
+.TitleSignature_signatureContainer__L4uuE {
+  display: inline-block;
+  width: 35%;
+  filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 1));
+}
+
+.TitleSignature_signatureContainer__L4uuE svg {
+  width: 100%;
+  height: 100%;
+}
+
+.TitleSignature_signatureContainer__L4uuE path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke: #d49a0b; /* Adjust color as needed */
+  fill: #d49a0b; /* Adjust color as needed */
+  stroke-width: 2; /* Adjust thickness as needed */
+  stroke-dasharray: 3349.56787109375px;
+  stroke-dashoffset: 3349.56787109375px;
+  fill-opacity: 0;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: TitleSignature_drawSignature__H9ivh 10s ease-in backwards, TitleSignature_fillIn__v8a2Z 3s linear forwards;
+  animation-delay: 2s;
+}
+
+.TitleSignature_signatureContainer__L4uuE path[id="0"] { animation-delay: 0s; }
+.TitleSignature_signatureContainer__L4uuE path[id="1"] { animation-delay: 0.1s; }
+.TitleSignature_signatureContainer__L4uuE path[id="2"] { animation-delay: 0.2s; }
+.TitleSignature_signatureContainer__L4uuE path[id="3"] { animation-delay: 0.3s; }
+.TitleSignature_signatureContainer__L4uuE path[id="4"] { animation-delay: 0.4s; }
+.TitleSignature_signatureContainer__L4uuE path[id="5"] { animation-delay: .5s; }
+.TitleSignature_signatureContainer__L4uuE path[id="6"] { animation-delay: .6s; }
+.TitleSignature_signatureContainer__L4uuE path[id="7"] { animation-delay: .7s; }
+.TitleSignature_signatureContainer__L4uuE path[id="8"] { animation-delay: .8s; }
+.TitleSignature_signatureContainer__L4uuE path[id="9"] { animation-delay: .9s; }
+.TitleSignature_signatureContainer__L4uuE path[id="10"] { animation-delay: 1s; }
+.TitleSignature_signatureContainer__L4uuE path[id="11"] { animation-delay: 1.1s; }
+
+@keyframes TitleSignature_drawSignature__H9ivh {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes TitleSignature_fillIn__v8a2Z {
+  0% {
+    fill-opacity: 0;
+  }
+  70% {
+    fill-opacity: 0;
+  }
+  100% {
+    fill-opacity: 1;
+  }
+}
+

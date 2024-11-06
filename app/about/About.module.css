@@ -1,0 +1,122 @@
+
+.bioContainer {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.bioText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bioText h1 {
+  font-size: 4rem;
+  color: #AAAAAA;
+}
+
+.bioText p {
+  font-size: 1.5rem;
+  line-height: 1.6;
+  padding: 1rem;
+  left: -50vw;
+  animation: slide ease 2s forwards;
+  position: relative;
+  opacity: 0%;
+}
+
+@keyframes slide {
+  to {
+    left: 0vw;
+  }
+  
+  0% {
+    opacity: 0%;
+  }
+  70% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.bioLeft {
+  flex: 70%;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5rem;
+}
+
+.bioText a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.3s;
+  font-weight: 800;
+  color: #0077cc; /* Change this to your preferred link color */
+}
+
+.bioText a:hover, .bioText a:focus {
+  background-size: 100% 2px;
+}
+
+.profileImageContainer {
+  position: relative;
+  flex: 30%;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  max-width: 835px;
+  min-width: 184px;
+}
+
+.profileImage {
+  filter: drop-shadow(30px 30px 4px #a47708);
+  height: 714px;
+  animation: appear ease 2s forwards;
+  opacity: 0%;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0%;
+  }  
+  40% {
+    opacity: 0%;
+  }  
+  100% {
+    opacity: 100%;
+  }  
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.socialIcon {
+  width: 40px;
+  height: 40px;
+  margin: 0 1rem;
+  color: #7f8c8d;
+  transition: color 0.3s ease;
+}
+
+.socialIcon:hover {
+  color: #34495e;
+}
+
+
+
+
+
+
+
+
+
+
+

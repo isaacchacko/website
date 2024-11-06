@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  width: 100vw;
+  height: 100vh;
+  background-color: #252525;
+  font-family: 'Jet Brains Mono', sans-serif;
+}
+
+:root p {
+  color: #AAAAAA;
+}
+
+.titleSignatureContainer { /* this takes up the whole width of the screen */
+  padding-top: 3rem;
+  padding-left: 6rem;
+  padding-bottom: 3rem;
+}
+
+.backToHome {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+.button:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.button svg {
+  margin-right: 10px;
+  fill: #fff;
+  width: 24px;
+  height: 24px;
+}
+
+.button span {
+  line-height: 1;
+}
+.contactInfo {
+  display: flex;
+  min-height: 100px;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #7f8c8d;
+}
+
+.contactInfo p {
+  padding-bottom: 1rem;
+}
+
