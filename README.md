@@ -1,12 +1,11 @@
 
 # Personal Website
+Howdy! Welcome to my personal website portfolio. [[Here]](https://website-three-iota-47.vercel.app/) you can find the most recent copy of my resume, my contact information, and how I like my Linux rice.
+
 ## Todo
 - About
   - [ ] add blue bell counter
   - [ ] add favorite media list
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Linux
+  - [ ] update to include hyprland
+  - [ ] add "my current distro" section
