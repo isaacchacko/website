@@ -16,7 +16,11 @@
 .titleSignatureContainer { /* this takes up the whole width of the screen */
   padding-top: 3rem;
   padding-left: 6rem;
+  padding-right: 6rem;
   padding-bottom: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .backToHome {

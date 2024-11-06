@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './About.module.css';
 import AboutSignature from '/components/signatures/AboutSignature'
+import NavButtons from '/components/AboutNavButtons'
 import '/app/globals.css';
 
 export default function About() {
@@ -13,9 +14,13 @@ export default function About() {
         About
       </Head>
 
+      <title>
+        About
+      </title>
       <div>
         <div className="titleSignatureContainer">
           <AboutSignature />
+          <NavButtons />
         </div>
         <div className={styles.bioContainer}>
           <div className={styles.bioLeft}>
@@ -51,7 +56,7 @@ export default function About() {
         </div>
         <div className="backToHome">
         <Link href="/" className="button">
-          Back to Home
+          Return to Home
         </Link>
         </div>
         <footer className="contactInfo">

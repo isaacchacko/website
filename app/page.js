@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import styles from './LandingPage.module.css';
 import IsaacChacko from '/components/signatures/IsaacChacko';
-import NavButtons from '/components/NavButtons';
+import NavButtons from '/components/LandingNavButtons';
 import SocialLinks from '/components/SocialLinks';
 
 export default function LandingPage() {

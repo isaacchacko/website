@@ -26,7 +26,7 @@ export default function About() {
               </p>
             </div>
             <Link href="/" className="button">
-              Back to Home
+              Return to Home
             </Link>
           </div>
         </div>
