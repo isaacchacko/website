@@ -11,6 +11,7 @@ export default function LandingPage() {
     <>
       <Head>
         <title>Home</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
         <div className={styles.howdyContainer}>
