@@ -4,9 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Portfolio.module.css';
 import PortfolioSignature from '/components/signatures/PortfolioSignature'
-import Repo from '/components/Repo'
 import '/app/globals.css';
-
 
 export default function About() {
   return (
@@ -26,8 +24,6 @@ export default function About() {
               <p className={styles.bio}>
                 insert portfolio content here
               </p>
-              <Repo username='isaacchacko' repoName='website'/>
-              <Repo username='isaacchacko' repoName='flow-fields'/>
             </div>
             <Link href="/" className="button">
               Return to Home
