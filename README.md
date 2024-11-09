@@ -10,4 +10,6 @@ Howdy! Welcome to my personal website portfolio. [[Here]](https://website-three-
   - [ ] update to include hyprland
   - [ ] add "my current distro" section
 - Portfolio
-  - [ ] add
+  - [ ] recalculate line count
+  - [ ] add css
+  - [ ] add markdown viewer
