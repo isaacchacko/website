@@ -29,10 +29,10 @@ export default function About() {
                 Howdy! I'm Isaac Chacko. I'm a homegrown Houstonian attending Texas A&M University.
               </p>
               <p className={styles.bio}>
-                Academically, I'm a President's Endowed National Merit Engineering Honors Freshman pursuing a major in Computer Science and a minor in Mathematics.
+                Academically, I'm a Engineering Honors freshman pursuing a B.S. in Computer Science with a minor in Mathematics.
               </p>
               <p className={styles.bio}>
-                Work wise, I compete in NASA's Lunar Autonomy Challenge, develop for <a href='https://aggieseek.net/'>AggieSEEK</a>, and work as a contributor for the <a href='https://taco-group.github.io/'>TACO Group</a>, currently developing AI video super resolution software with PyTorch.
+                I'm currently competing in <a href='https://lunar-autonomy-challenge.jhuapl.edu/'>NASA's Lunar Autonomy Challenge</a>, developing for <a href='https://aggieseek.net/'>AggieSEEK</a>, and write commits for the <a href='https://taco-group.github.io/'>TACO Group</a>, currently developing AI video super resolution software with PyTorch.
               </p>
               <p className={styles.bio}>
                 For fun, I like to run, play games (board and video), and try all flavors of Blue Bell Ice Cream. My ultimate bucket list item is to visit all of the Great Wonders of the World. <a href='https://docs.google.com/spreadsheets/d/15ZyCRQV3nqTTrNkQFZ3_Nak3hvymi4u1y2ql3w_uu1Y/edit?usp=sharing'>I'm already 8% of the way there!</a>
