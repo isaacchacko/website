@@ -10,11 +10,10 @@ class Settings(BaseSettings):
     spotify_client_secret: str = ""
     spotify_refresh_token: str = ""
 
+    gmail_client_id: str = ""
+    gmail_client_secret: str = ""
+    gmail_refresh_token: str = ""
     email_notify_to: str
-    smtp_host: str = "smtp.gmail.com"
-    smtp_port: int = 587
-    smtp_user: str
-    smtp_password: str = ""
 
     class Config:
         env_file = ".env"

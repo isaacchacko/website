@@ -145,13 +145,13 @@ isaacchacko-v2/
 
 ### 1.1 Core App Skeleton
 
-- [ ] `backend/app/config.py` — Pydantic `Settings` class that reads from env
-- [ ] `backend/app/database.py` — async engine, session factory, `init_db()`, `get_session()` dependency
-- [ ] `backend/app/auth.py` — `get_admin_key()` dependency that checks `X-Admin-Key` header
+- [x] `backend/app/config.py` — Pydantic `Settings` class that reads from env
+- [x] `backend/app/database.py` — async engine, session factory, `init_db()`, `get_session()` dependency
+- [x] `backend/app/auth.py` — `get_admin_key()` dependency that checks `X-Admin-Key` header
   - Returns 401 if missing/wrong
   - Use `Depends(get_admin_key)` on any admin-only route
-- [ ] `backend/app/main.py` — FastAPI app with lifespan (init DB on startup), CORS middleware, include all routers
-- [ ] Verify: hit `GET /health` and `GET /docs` (Swagger UI — this is the auto-generated interactive API explorer at localhost:8000/docs)
+- [x] `backend/app/main.py` — FastAPI app with lifespan (init DB on startup), CORS middleware, include all routers
+- [x] Verify: hit `GET /health` and `GET /docs` (Swagger UI — this is the auto-generated interactive API explorer at localhost:8000/docs)
 
 ### 1.2 Guestbook
 
@@ -168,13 +168,13 @@ isaacchacko-v2/
 
 **Public Endpoints:**
 
-- [ ] `POST /guestbook/` — Create entry
+- [x] `POST /guestbook/` — Create entry
   - Validate fields with Pydantic
   - Check rate limit: 1 post per IP per hour (use Redis or DB query)
   - If allowed: save to DB, trigger background task to send email notification
   - Return 201 with the entry (excluding ip_address)
   - Return 429 if rate limited
-- [ ] `GET /guestbook/` — List entries, paginated
+- [x] `GET /guestbook/` — List entries, paginated
   - Query params: `page` (default 1), `per_page` (default 20, max 50)
   - Return entries newest-first
   - Response includes: `items`, `total`, `page`, `per_page`, `pages`
@@ -182,7 +182,7 @@ isaacchacko-v2/
 
 **Admin Endpoints (require `X-Admin-Key`):**
 
-- [ ] `DELETE /guestbook/{id}` — Delete an entry
+- [x] `DELETE /guestbook/{id}` — Delete an entry
 
 **Background Task:**
 
@@ -442,6 +442,10 @@ isaacchacko-v2/
 - [ ] Seed script with sample data for all features
 - [ ] Run through the Swagger docs and manually test every endpoint
 - [ ] **Evening: Do Exercise 5 from the practice project (timed 30-min mock)**
+
+### isaac add in
+
+- [ ] add back rate limiting
 
 ---
 
