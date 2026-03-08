@@ -1,9 +1,18 @@
 from math import ceil
-from fastapi import APIRouter, Depends, HTTPException, Request, BackgroundTasks, status
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Request,
+    BackgroundTasks,
+    status,
+    Header,
+)
 from sqlmodel import select, func, col
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_session
 from app.auth import get_admin_key
+from app.config import settings
 
 # from app.services.rate_limiter import check_rate_limit
 from app.services.email import send_guestbook_notification
@@ -70,17 +79,26 @@ async def list_entries(
     page: int = 1,
     per_page: int = 20,
     session: AsyncSession = Depends(get_session),
+    x_admin_key: str = Header(None),
 ):
+    is_admin = x_admin_key == settings.admin_api_key
+
     per_page = min(per_page, 50)
     offset = (page - 1) * per_page
 
-    total_result = await session.execute(select(func.count(col(GuestbookEntry.id))))
+    base_query = select(GuestbookEntry)
+    if not is_admin:
+        base_query = base_query.where(GuestbookEntry.is_approved)
+
+    total_result = await session.execute(
+        select(func.count(col(GuestbookEntry.id))).where(
+            GuestbookEntry.is_approved if not is_admin else True
+        )
+    )
     total = total_result.scalar() or 0
 
     entries_result = await session.execute(
-        select(GuestbookEntry)
-        .where(GuestbookEntry.is_approved)
-        .order_by(col(GuestbookEntry.created_at).desc())
+        base_query.order_by(col(GuestbookEntry.created_at).desc())
         .offset(offset)
         .limit(per_page)
     )
