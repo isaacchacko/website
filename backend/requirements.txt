@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+sqlmodel
+asyncpg
+pydantic
+pydantic-settings
+httpx
+redis[hiredis]
+python-multipart
+
+# dev
+pytest
+pytest-asyncio

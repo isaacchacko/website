@@ -1,0 +1,43 @@
+services:
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend/app:/app/app        # hot reload — code changes reflect instantly
+      - uploads:/app/uploads          # photo uploads persist across restarts
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://isaac:domainexpansion@db:5432/isaacchacko
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      db:
+        condition: service_healthy   # wait until postgres passes its healthcheck
+      redis:
+        condition: service_started
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=isaac
+      - POSTGRES_PASSWORD=domainexpansion
+      - POSTGRES_DB=isaacchacko
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U isaac -d isaacchacko"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+
+volumes:
+  postgres_data:   # persists your database between `docker compose down` restarts
+  uploads:         # persists uploaded photos between restarts
