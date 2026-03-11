@@ -6,3 +6,6 @@ node_modules/
 frontend/dist/
 uploads/
 .one-time-gmail-oauth/
+.structure
+.images/
+.chat

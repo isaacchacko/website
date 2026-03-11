@@ -6,9 +6,8 @@ class Settings(BaseSettings):
     redis_url: str
     admin_api_key: str
 
-    spotify_client_id: str = ""
-    spotify_client_secret: str = ""
-    spotify_refresh_token: str = ""
+    spotify_client_id: str
+    spotify_client_secret: str
 
     gmail_client_id: str = ""
     gmail_client_secret: str = ""

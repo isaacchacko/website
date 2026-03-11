@@ -35,3 +35,26 @@ async def send_guestbook_notification(name: str, message: str, website: str | No
 
     except Exception as e:
         print(f"Failed to send email: {e}")
+
+
+async def send_suggestion_notification(suggestion):
+    try:
+        msg = EmailMessage()
+        msg["Subject"] = f"New library suggestion: {suggestion.title}"
+        msg["From"] = settings.email_notify_to
+        msg["To"] = settings.email_notify_to
+        msg.set_content(
+            f"From: {suggestion.suggested_by}\n"
+            f"Type: {suggestion.item_type}\n"
+            f"Title: {suggestion.title}\n"
+            f"URL: {suggestion.url or 'none'}\n"
+            f"Note: {suggestion.note or 'none'}\n"
+            f"Tags: {suggestion.tags or 'none'}\n"
+        )
+
+        encoded = base64.urlsafe_b64encode(msg.as_bytes()).decode()
+        service = _get_gmail_service()
+        service.users().messages().send(userId="me", body={"raw": encoded}).execute()
+
+    except Exception as e:
+        print(f"Failed to send suggestion email: {e}")

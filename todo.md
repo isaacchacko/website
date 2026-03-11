@@ -258,7 +258,7 @@ isaacchacko-v2/
 
 **Public Endpoints:**
 
-- [ ] `GET /library/` — List items with filtering + sorting
+- [x] `GET /library/` — List items with filtering + sorting
   - Query params:
     - `type` — filter by item_type
     - `tag` — filter by tag name
@@ -266,21 +266,21 @@ isaacchacko-v2/
     - `page`, `per_page` — pagination
   - Response includes tags as list of strings per item
   - Only show rating if `show_rating` is true
-- [ ] `GET /library/{id}` — Single item with tags
-- [ ] `GET /library/tags` — List all tags with item counts
-- [ ] `POST /library/suggest` — Submit a suggestion
+- [x] `GET /library/{id}` — Single item with tags
+- [x] `GET /library/tags` — List all tags with item counts
+- [x] `POST /library/suggest` — Submit a suggestion
   - Rate limited: 1 per IP per hour
   - Triggers email notification to you with suggestion details
   - Returns 201 with confirmation message
 
 **Admin Endpoints:**
 
-- [ ] `POST /library/` — Create item (with tags as list of strings, auto-create new tags)
-- [ ] `PATCH /library/{id}` — Update item (including tags)
-- [ ] `DELETE /library/{id}` — Delete item
-- [ ] `GET /library/suggestions` — List pending suggestions
-- [ ] `POST /library/suggestions/{id}/approve` — Approve (creates a LibraryItem from it)
-- [ ] `POST /library/suggestions/{id}/reject` — Reject
+- [x] `POST /library/` — Create item (with tags as list of strings, auto-create new tags)
+- [x] `PATCH /library/{id}` — Update item (including tags)
+- [x] `DELETE /library/{id}` — Delete item
+- [x] `GET /library/suggestions` — List pending suggestions
+- [x] `POST /library/suggestions/{id}/approve` — Approve (creates a LibraryItem from it)
+- [x] `POST /library/suggestions/{id}/reject` — Reject
 
 **Tests:**
 
@@ -306,28 +306,28 @@ isaacchacko-v2/
 
 **Admin Endpoints:**
 
-- [ ] `POST /photos/` — Upload a photo
+- [x] `POST /photos/` — Upload a photo
   - Accept multipart form data (image file + optional caption)
   - Validate file type (jpg, png, webp, gif)
   - Generate UUID filename, save to disk
   - Save metadata to DB
   - Return 201 with photo metadata
-- [ ] `PATCH /photos/{id}` — Update caption
-- [ ] `DELETE /photos/{id}` — Delete photo (remove file + DB record)
+- [x] `PATCH /photos/{id}` — Update caption
+- [x] `DELETE /photos/{id}` — Delete photo (remove file + DB record)
 
 **Public Endpoints:**
 
-- [ ] `GET /photos/` — List photos, paginated, newest first
+- [x] `GET /photos/` — List photos, paginated, newest first
   - Return photo metadata + URL path to image
-- [ ] `GET /photos/{id}` — Single photo metadata
-- [ ] `GET /uploads/photos/{filename}` — Serve the actual image file
+- [x] `GET /photos/{id}` — Single photo metadata
+- [x] `GET /uploads/photos/{filename}` — Serve the actual image file
   - Use FastAPI `StaticFiles` or `FileResponse`
 
 **Tests:**
 
-- [ ] Test photo upload
-- [ ] Test listing with pagination
-- [ ] Test delete removes file from disk
+- [x] Test photo upload
+- [x] Test listing with pagination
+- [x] Test delete removes file from disk
 
 ### 2.3 Visitor Analytics
 
@@ -348,7 +348,7 @@ isaacchacko-v2/
 
 **Middleware:**
 
-- [ ] `app/middleware/analytics.py`
+- [x] `app/middleware/analytics.py`
   - Log every incoming request as a background task (don't slow down the response)
   - Parse user agent for device_type + browser
   - Skip logging for `/docs`, `/health`, `/openapi.json`, static files
@@ -356,19 +356,19 @@ isaacchacko-v2/
 
 **Public Endpoint:**
 
-- [ ] `POST /analytics/pageview` — Frontend reports page duration
+- [x] `POST /analytics/pageview` — Frontend reports page duration
   - Body: `{ "path": "/library", "duration_seconds": 45 }`
   - Updates the most recent event matching that path + IP
 
 **Admin Endpoints:**
 
-- [ ] `GET /analytics/summary` — Dashboard data
+- [x] `GET /analytics/summary` — Dashboard data
   - Total views (today, this week, all time)
   - Top pages
   - Top referrers
   - Device/browser breakdown
   - Query param: `days` (default 7) for time window
-- [ ] `GET /analytics/events` — Raw event log, paginated, newest first
+- [x] `GET /analytics/events` — Raw event log, paginated, newest first
 
 **Tests:**
 
@@ -384,7 +384,7 @@ isaacchacko-v2/
 
 **No new DB model needed — uses Redis for token storage.**
 
-- [ ] `app/services/spotify.py` — Port your existing Node service
+- [x] `app/services/spotify.py` — Port your existing Node service
   - Store refresh token in Redis
   - `get_current_track()` → calls Spotify API, returns track info or None
   - Handle token refresh automatically
@@ -392,7 +392,7 @@ isaacchacko-v2/
 
 **Public Endpoint:**
 
-- [ ] `GET /spotify/now-playing`
+- [x] `GET /spotify/now-playing`
   - Returns: `{ "is_playing": true, "track": "Song Name", "artist": "Artist", "album": "Album", "album_art_url": "...", "spotify_url": "..." }`
   - Or: `{ "is_playing": false }` when nothing is playing
 
@@ -413,20 +413,20 @@ isaacchacko-v2/
 
 **Public Endpoint:**
 
-- [ ] `GET /status/` — Returns the most recent status entry
+- [x] `GET /status/` — Returns the most recent status entry
 
 **Admin/API Endpoint:**
 
-- [ ] `POST /status/` — Set a new status (requires API key)
+- [x] `POST /status/` — Set a new status (requires API key)
   - Old statuses are kept in DB (history) but only latest is shown publicly
 
 **Tests:**
 
-- [ ] Test setting and getting status
+- [x] Test setting and getting status
 
 ### 3.3 Admin CLI
 
-- [ ] `cli.py` — Simple script that calls your own API with the admin key
+- [x] `cli.py` — Simple script that calls your own API with the admin key
   - `python cli.py status "working on isaacchacko.com"` → POST /status/
   - `python cli.py guestbook list` → GET /guestbook/
   - `python cli.py guestbook delete 47` → DELETE /guestbook/47
@@ -437,11 +437,11 @@ isaacchacko-v2/
 
 ### 3.4 Polish + Prep
 
-- [ ] Test full Docker Compose startup from scratch (cold boot)
-- [ ] Make sure `docker compose down -v && docker compose up --build` works cleanly
-- [ ] Seed script with sample data for all features
-- [ ] Run through the Swagger docs and manually test every endpoint
-- [ ] **Evening: Do Exercise 5 from the practice project (timed 30-min mock)**
+- [x] Test full Docker Compose startup from scratch (cold boot)
+- [x] Make sure `docker compose down -v && docker compose up --build` works cleanly
+- [x] Seed script with sample data for all features
+- [x] Run through the Swagger docs and manually test every endpoint
+- [x] **Evening: Do Exercise 5 from the practice project (timed 30-min mock)**
 
 ### isaac add in
 
