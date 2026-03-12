@@ -37,6 +37,19 @@ services:
     image: redis:7
     restart: unless-stopped
 
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/:/app
+    environment:
+      - VITE_API_URL=http://api:3001
+    depends_on:
+      - api
+    restart: unless-stopped
 volumes:
   postgres_data:   # persists your database between `docker compose down` restarts
   uploads:         # persists uploaded photos between restarts
