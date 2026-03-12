@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.34.0",
     "@tanstack/query-core": "^5.90.20",
+    "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-router": "^1.166.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

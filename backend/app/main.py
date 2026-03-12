@@ -32,7 +32,9 @@ app.add_middleware(AnalyticsMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",
+        "http://localhost:3000",  # Frontend dev server (HTTP)
+        "https://localhost:3000",  # Frontend dev server (HTTPS)
+        "http://localhost:3001",  # Backend port (for direct access)
         "https://isaacchacko.com",
     ],
     allow_credentials=True,

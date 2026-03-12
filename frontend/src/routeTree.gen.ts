@@ -9,38 +9,224 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PhotosRouteImport } from './routes/photos'
+import { Route as LibraryRouteImport } from './routes/library'
+import { Route as LeaveAMessageRouteImport } from './routes/leave-a-message'
 import { Route as ArchRouteImport } from './routes/arch'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as SpotifyIndexRouteImport } from './routes/spotify.index'
+import { Route as LibrarySuggestRouteImport } from './routes/library.suggest'
+import { Route as LibraryItemIdRouteImport } from './routes/library.$itemId'
+import { Route as AdminStatusRouteImport } from './routes/admin.status'
+import { Route as AdminLeaveAMessageRouteImport } from './routes/admin.leave-a-message'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhotosRoute = PhotosRouteImport.update({
+  id: '/photos',
+  path: '/photos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaveAMessageRoute = LeaveAMessageRouteImport.update({
+  id: '/leave-a-message',
+  path: '/leave-a-message',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArchRoute = ArchRouteImport.update({
   id: '/arch',
   path: '/arch',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpotifyIndexRoute = SpotifyIndexRouteImport.update({
+  id: '/spotify/',
+  path: '/spotify/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibrarySuggestRoute = LibrarySuggestRouteImport.update({
+  id: '/suggest',
+  path: '/suggest',
+  getParentRoute: () => LibraryRoute,
+} as any)
+const LibraryItemIdRoute = LibraryItemIdRouteImport.update({
+  id: '/$itemId',
+  path: '/$itemId',
+  getParentRoute: () => LibraryRoute,
+} as any)
+const AdminStatusRoute = AdminStatusRouteImport.update({
+  id: '/admin/status',
+  path: '/admin/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLeaveAMessageRoute = AdminLeaveAMessageRouteImport.update({
+  id: '/admin/leave-a-message',
+  path: '/admin/leave-a-message',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/admin/analytics',
+  path: '/admin/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/arch': typeof ArchRoute
+  '/leave-a-message': typeof LeaveAMessageRoute
+  '/library': typeof LibraryRouteWithChildren
+  '/photos': typeof PhotosRoute
+  '/projects': typeof ProjectsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/leave-a-message': typeof AdminLeaveAMessageRoute
+  '/admin/status': typeof AdminStatusRoute
+  '/library/$itemId': typeof LibraryItemIdRoute
+  '/library/suggest': typeof LibrarySuggestRoute
+  '/spotify/': typeof SpotifyIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/arch': typeof ArchRoute
+  '/leave-a-message': typeof LeaveAMessageRoute
+  '/library': typeof LibraryRouteWithChildren
+  '/photos': typeof PhotosRoute
+  '/projects': typeof ProjectsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/leave-a-message': typeof AdminLeaveAMessageRoute
+  '/admin/status': typeof AdminStatusRoute
+  '/library/$itemId': typeof LibraryItemIdRoute
+  '/library/suggest': typeof LibrarySuggestRoute
+  '/spotify': typeof SpotifyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/arch': typeof ArchRoute
+  '/leave-a-message': typeof LeaveAMessageRoute
+  '/library': typeof LibraryRouteWithChildren
+  '/photos': typeof PhotosRoute
+  '/projects': typeof ProjectsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/leave-a-message': typeof AdminLeaveAMessageRoute
+  '/admin/status': typeof AdminStatusRoute
+  '/library/$itemId': typeof LibraryItemIdRoute
+  '/library/suggest': typeof LibrarySuggestRoute
+  '/spotify/': typeof SpotifyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/arch'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/arch'
+    | '/leave-a-message'
+    | '/library'
+    | '/photos'
+    | '/projects'
+    | '/admin/analytics'
+    | '/admin/leave-a-message'
+    | '/admin/status'
+    | '/library/$itemId'
+    | '/library/suggest'
+    | '/spotify/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/arch'
-  id: '__root__' | '/arch'
+  to:
+    | '/'
+    | '/about'
+    | '/arch'
+    | '/leave-a-message'
+    | '/library'
+    | '/photos'
+    | '/projects'
+    | '/admin/analytics'
+    | '/admin/leave-a-message'
+    | '/admin/status'
+    | '/library/$itemId'
+    | '/library/suggest'
+    | '/spotify'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/arch'
+    | '/leave-a-message'
+    | '/library'
+    | '/photos'
+    | '/projects'
+    | '/admin/analytics'
+    | '/admin/leave-a-message'
+    | '/admin/status'
+    | '/library/$itemId'
+    | '/library/suggest'
+    | '/spotify/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   ArchRoute: typeof ArchRoute
+  LeaveAMessageRoute: typeof LeaveAMessageRoute
+  LibraryRoute: typeof LibraryRouteWithChildren
+  PhotosRoute: typeof PhotosRoute
+  ProjectsRoute: typeof ProjectsRoute
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminLeaveAMessageRoute: typeof AdminLeaveAMessageRoute
+  AdminStatusRoute: typeof AdminStatusRoute
+  SpotifyIndexRoute: typeof SpotifyIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photos': {
+      id: '/photos'
+      path: '/photos'
+      fullPath: '/photos'
+      preLoaderRoute: typeof PhotosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leave-a-message': {
+      id: '/leave-a-message'
+      path: '/leave-a-message'
+      fullPath: '/leave-a-message'
+      preLoaderRoute: typeof LeaveAMessageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/arch': {
       id: '/arch'
       path: '/arch'
@@ -48,11 +234,90 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/spotify/': {
+      id: '/spotify/'
+      path: '/spotify'
+      fullPath: '/spotify/'
+      preLoaderRoute: typeof SpotifyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library/suggest': {
+      id: '/library/suggest'
+      path: '/suggest'
+      fullPath: '/library/suggest'
+      preLoaderRoute: typeof LibrarySuggestRouteImport
+      parentRoute: typeof LibraryRoute
+    }
+    '/library/$itemId': {
+      id: '/library/$itemId'
+      path: '/$itemId'
+      fullPath: '/library/$itemId'
+      preLoaderRoute: typeof LibraryItemIdRouteImport
+      parentRoute: typeof LibraryRoute
+    }
+    '/admin/status': {
+      id: '/admin/status'
+      path: '/admin/status'
+      fullPath: '/admin/status'
+      preLoaderRoute: typeof AdminStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/leave-a-message': {
+      id: '/admin/leave-a-message'
+      path: '/admin/leave-a-message'
+      fullPath: '/admin/leave-a-message'
+      preLoaderRoute: typeof AdminLeaveAMessageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/admin/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface LibraryRouteChildren {
+  LibraryItemIdRoute: typeof LibraryItemIdRoute
+  LibrarySuggestRoute: typeof LibrarySuggestRoute
+}
+
+const LibraryRouteChildren: LibraryRouteChildren = {
+  LibraryItemIdRoute: LibraryItemIdRoute,
+  LibrarySuggestRoute: LibrarySuggestRoute,
+}
+
+const LibraryRouteWithChildren =
+  LibraryRoute._addFileChildren(LibraryRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   ArchRoute: ArchRoute,
+  LeaveAMessageRoute: LeaveAMessageRoute,
+  LibraryRoute: LibraryRouteWithChildren,
+  PhotosRoute: PhotosRoute,
+  ProjectsRoute: ProjectsRoute,
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminLeaveAMessageRoute: AdminLeaveAMessageRoute,
+  AdminStatusRoute: AdminStatusRoute,
+  SpotifyIndexRoute: SpotifyIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

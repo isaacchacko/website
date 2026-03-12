@@ -39,14 +39,17 @@ services:
 
   frontend:
     build:
-      context: ./frontend/
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    # Don't override /app (which has node_modules from the build)
+    # Optional: only bind-mount source files if you want live reload:
     volumes:
-      - ./frontend/:/app
+      - ./frontend:/app
+      - /app/node_modules
     environment:
-      - VITE_API_URL=http://api:3001
+      - VITE_API_URL=http://localhost:3001
     depends_on:
       - api
     restart: unless-stopped

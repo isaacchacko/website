@@ -25,6 +25,7 @@ class GuestbookEntryPublic(SQLModel):
     message: str
     website: Optional[str]
     created_at: datetime
+    is_approved: bool
 
 
 class GuestbookPage(SQLModel):

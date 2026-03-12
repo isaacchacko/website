@@ -23,7 +23,7 @@ def _to_public(photo: Photo) -> PhotoPublic:
         original_filename=photo.original_filename,
         caption=photo.caption,
         uploaded_at=photo.uploaded_at,
-        url=f"/uploads/photos/{photo.filename}",
+        url=f"/photos/file/{photo.filename}",
     )
 
 

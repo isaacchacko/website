@@ -132,11 +132,11 @@ async def approve_entry(
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_entry(
-    entry_id: int,
+    id: int,
     session: AsyncSession = Depends(get_session),
     _=Depends(get_admin_key),
 ):
-    entry = await session.get(GuestbookEntry, entry_id)
+    entry = await session.get(GuestbookEntry, id)
     if not entry:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Entry not found"
