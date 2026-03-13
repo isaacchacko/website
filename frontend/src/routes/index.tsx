@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import { Alert, Box, Button, Heading, HStack, Spinner, Stack, Text } from '@chakra-ui/react'
 import { fetchJson } from '../lib/api'
 import { sanityCheck } from '../lib/sanity-check'
 
@@ -30,97 +29,200 @@ function HomePage() {
   const error = healthQuery.error || statusQuery.error
 
   return (
-    <Stack gap={6}>
-      <Heading size="lg">Dryft Prep Playground</Heading>
-
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {isLoading && (
-        <HStack>
-          <Spinner />
-          <Text>Checking backend health…</Text>
-        </HStack>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⏳</span>
+          <span>Checking backend health…</span>
+        </div>
       )}
 
       {error && (
-        <Alert.Root status="error">
-          <Alert.Title>Backend unreachable</Alert.Title>
-          <Alert.Description>
-            {error instanceof Error ? error.message : 'Make sure the FastAPI server is running on port 3001.'}
+        <div
+          style={{
+            border: '1px solid #b91c1c',
+            backgroundColor: '#450a0a',
+            padding: '1rem',
+            borderRadius: '0.5rem',
+          }}
+        >
+          <strong style={{ display: 'block', marginBottom: '0.25rem' }}>
+            Backend unreachable
+          </strong>
+          <div style={{ fontSize: '0.875rem' }}>
+            {error instanceof Error
+              ? error.message
+              : 'Make sure the FastAPI server is running on port 3001.'}
             <br />
-            <Text fontSize="sm" mt={2}>
-              Check console for details. API base: {import.meta.env.VITE_API_URL ?? 'http://localhost:3001'}
-            </Text>
-          </Alert.Description>
-        </Alert.Root>
+            <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
+              Check console for details. API base:{' '}
+              {import.meta.env.VITE_API_URL ?? 'http://localhost:3001'}
+            </span>
+          </div>
+        </div>
       )}
 
       {!isLoading && !error && (
-        <Alert.Root status={healthQuery.data?.status === 'ok' ? 'success' : 'warning'}>
-          <Alert.Title>Health: {healthQuery.data?.status}</Alert.Title>
-          <Alert.Description>
+        <div
+          style={{
+            border: '1px solid #16a34a',
+            backgroundColor: '#052e16',
+            padding: '1rem',
+            borderRadius: '0.5rem',
+          }}
+        >
+          <strong style={{ display: 'block', marginBottom: '0.25rem' }}>
+            Health: {healthQuery.data?.status}
+          </strong>
+          <div>
             Current status:{' '}
             {statusQuery.data?.text ? statusQuery.data.text : 'No status set yet.'}
-          </Alert.Description>
-        </Alert.Root>
+          </div>
+        </div>
       )}
 
-      <Box>
-        <Heading size="md" mb={3}>
+      <section>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.75rem' }}>
           Features
-        </Heading>
-        <HStack wrap="wrap" gap={3}>
+        </h2>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+          }}
+        >
           <Link to="/leave-a-message">
-            <Button colorScheme="teal" variant="outline">
+            <button
+              type="button"
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '9999px',
+                border: '1px solid #14b8a6',
+                background: 'transparent',
+                color: '#14b8a6',
+                cursor: 'pointer',
+              }}
+            >
               Leave a message
-            </Button>
+            </button>
           </Link>
           <Link to="/library" search={{ page: 1, sort: 'recent', tag: undefined, item_type: undefined }}>
-            <Button variant="outline">
+            <button
+              type="button"
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '9999px',
+                border: '1px solid #4b5563',
+                background: 'transparent',
+                color: '#e5e7eb',
+                cursor: 'pointer',
+              }}
+            >
               Library
-            </Button>
+            </button>
           </Link>
           <Link to="/photos">
-            <Button variant="outline">
+            <button
+              type="button"
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '9999px',
+                border: '1px solid #4b5563',
+                background: 'transparent',
+                color: '#e5e7eb',
+                cursor: 'pointer',
+              }}
+            >
               Photos
-            </Button>
+            </button>
           </Link>
           <Link to="/spotify">
-            <Button variant="outline">
+            <button
+              type="button"
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '9999px',
+                border: '1px solid #4b5563',
+                background: 'transparent',
+                color: '#e5e7eb',
+                cursor: 'pointer',
+              }}
+            >
               Spotify Now Playing
-            </Button>
+            </button>
           </Link>
           <Link to="/admin/analytics">
-            <Button variant="outline">
+            <button
+              type="button"
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '9999px',
+                border: '1px solid #4b5563',
+                background: 'transparent',
+                color: '#e5e7eb',
+                cursor: 'pointer',
+              }}
+            >
               Analytics (admin)
-            </Button>
+            </button>
           </Link>
           <Link to="/admin/status">
-            <Button variant="outline">
+            <button
+              type="button"
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '9999px',
+                border: '1px solid #4b5563',
+                background: 'transparent',
+                color: '#e5e7eb',
+                cursor: 'pointer',
+              }}
+            >
               Status (admin)
-            </Button>
+            </button>
           </Link>
           <Link to="/admin/leave-a-message">
-            <Button variant="outline">
+            <button
+              type="button"
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '9999px',
+                border: '1px solid #4b5563',
+                background: 'transparent',
+                color: '#e5e7eb',
+                cursor: 'pointer',
+              }}
+            >
               Leave a message (admin)
-            </Button>
+            </button>
           </Link>
-        </HStack>
-      </Box>
+        </div>
+      </section>
 
-      <Box>
-        <Heading size="md" mb={3}>
+      <section>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.75rem' }}>
           Debug
-        </Heading>
-        <Button
+        </h2>
+        <button
+          type="button"
           onClick={() => sanityCheck()}
-          variant="outline"
-          size="sm"
+          style={{
+            padding: '0.25rem 0.75rem',
+            borderRadius: '9999px',
+            border: '1px solid #4b5563',
+            background: 'transparent',
+            color: '#e5e7eb',
+            cursor: 'pointer',
+            fontSize: '0.875rem',
+          }}
         >
           Run API Sanity Check
-        </Button>
-        <Text fontSize="sm" color="gray.400" mt={2}>
+        </button>
+        <p style={{ fontSize: '0.875rem', color: '#9ca3af', marginTop: '0.5rem' }}>
           Check browser console for detailed results
-        </Text>
-      </Box>
-    </Stack>
+        </p>
+      </section>
+    </div>
   )
 }

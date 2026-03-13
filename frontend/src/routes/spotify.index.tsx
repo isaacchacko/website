@@ -1,16 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import {
-  Alert,
-  Box,
-  Button,
-  HStack,
-  Image,
-  Spinner,
-  Stack,
-  Text,
-  Tag,
-} from '@chakra-ui/react'
 import { fetchJson, type ApiError } from '../lib/api'
 
 type SpotifyNowPlaying = {
@@ -50,98 +39,163 @@ function SpotifyPage() {
       : null
 
   return (
-    <Stack gap={6}>
-      <Text fontSize="2xl" fontWeight="bold">
-        Spotify now playing
-      </Text>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Spotify now playing</h1>
 
       {query.isLoading && (
-        <HStack>
-          <Spinner />
-          <Text>Fetching track…</Text>
-        </HStack>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⏳</span>
+          <span>Fetching track…</span>
+        </div>
       )}
 
       {query.error && (
-        <Alert.Root status="error">
-          <Alert.Title>Could not fetch now playing</Alert.Title>
-          <Alert.Description>
+        <div
+          style={{
+            border: '1px solid #b91c1c',
+            backgroundColor: '#450a0a',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.9rem',
+          }}
+        >
+          <strong>Could not fetch now playing</strong>
+          <div>
             {(query.error as ApiError).status === 503
               ? 'Spotify data is temporarily unavailable.'
               : 'Check that the backend and Spotify integration are configured.'}
-          </Alert.Description>
-        </Alert.Root>
+          </div>
+        </div>
       )}
 
       {data && (
-        <Stack gap={4}>
-          <HStack align="center" gap={4}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             {data.image && (
-              <Image src={data.image} boxSize="96px" borderRadius="md" />
+              <img
+                src={data.image}
+                alt={data.track ?? 'Album art'}
+                style={{
+                  width: '96px',
+                  height: '96px',
+                  borderRadius: '0.5rem',
+                  objectFit: 'cover',
+                }}
+              />
             )}
-            <Box>
-              <HStack gap={2} align="center" mb={1}>
-                <Text fontWeight="bold" fontSize="lg">
+            <div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  marginBottom: '0.25rem',
+                }}
+              >
+                <span style={{ fontWeight: 600, fontSize: '1.125rem' }}>
                   {data.track ?? (isPlaying ? 'Unknown track' : 'Nothing playing')}
-                </Text>
+                </span>
                 {data.explicit && (
-                  <Tag.Root size="sm" variant="solid" colorPalette="red">
-                    <Tag.Label>E</Tag.Label>
-                  </Tag.Root>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      padding: '0.1rem 0.35rem',
+                      borderRadius: '0.375rem',
+                      backgroundColor: '#b91c1c',
+                      color: '#f9fafb',
+                    }}
+                  >
+                    E
+                  </span>
                 )}
-              </HStack>
-              <Text color="gray.300">
+              </div>
+              <p style={{ color: '#d1d5db' }}>
                 {artistNames || 'Unknown artist'}
                 {data.album && ` — ${data.album}`}
-              </Text>
-              <HStack gap={3} mt={1} fontSize="sm" color="gray.400">
-                <Text>{isPlaying ? 'Now playing' : 'Paused'}</Text>
-                {data.popularity != null && (
-                  <Text>Popularity: {data.popularity}</Text>
-                )}
-              </HStack>
-            </Box>
-          </HStack>
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '0.75rem',
+                  marginTop: '0.25rem',
+                  fontSize: '0.875rem',
+                  color: '#9ca3af',
+                }}
+              >
+                <span>{isPlaying ? 'Now playing' : 'Paused'}</span>
+                {data.popularity != null && <span>Popularity: {data.popularity}</span>}
+              </div>
+            </div>
+          </div>
 
           {progressPct != null && (
-            <Box>
-              <Box
-                h="6px"
-                borderRadius="full"
-                bg="gray.700"
-                overflow="hidden"
+            <div>
+              <div
+                style={{
+                  height: '6px',
+                  borderRadius: '9999px',
+                  backgroundColor: '#374151',
+                  overflow: 'hidden',
+                }}
               >
-                <Box
-                  h="100%"
-                  width={`${progressPct}%`}
-                  bg="green.400"
-                  transition="width 0.2s linear"
+                <div
+                  style={{
+                    height: '100%',
+                    width: `${progressPct}%`,
+                    backgroundColor: '#22c55e',
+                    transition: 'width 0.2s linear',
+                  }}
                 />
-              </Box>
-              <HStack justify="space-between" fontSize="xs" color="gray.400" mt={1}>
-                <Text>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: '0.75rem',
+                  color: '#9ca3af',
+                  marginTop: '0.25rem',
+                }}
+              >
+                <span>
                   {Math.floor((data!.progress ?? 0) / 1000)}s /{' '}
                   {Math.floor((data!.duration ?? 0) / 1000)}s
-                </Text>
+                </span>
                 {data.track_url && (
                   <a
                     href={data.track_url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    style={{ color: '#4ade80' }}
                   >
-                    <Text color="green.300">Open in Spotify</Text>
+                    Open in Spotify
                   </a>
                 )}
-              </HStack>
-            </Box>
+              </div>
+            </div>
           )}
-        </Stack>
+        </div>
       )}
 
-      <Button onClick={refetch} variant="outline" alignSelf="flex-start">
+      <button
+        type="button"
+        onClick={refetch}
+        style={{
+          alignSelf: 'flex-start',
+          padding: '0.5rem 0.75rem',
+          borderRadius: '9999px',
+          border: '1px solid #4b5563',
+          backgroundColor: 'transparent',
+          color: '#e5e7eb',
+          cursor: 'pointer',
+        }}
+      >
         Refresh
-      </Button>
-    </Stack>
+      </button>
+    </div>
   )
 }
 

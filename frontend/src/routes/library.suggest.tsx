@@ -1,14 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useMutation } from '@tanstack/react-query'
-import {
-  Alert,
-  Box,
-  Button,
-  Input,
-  Stack,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
 import { type SubmitEvent } from 'react'
 import { fetchJson } from '../lib/api'
 
@@ -49,15 +40,15 @@ function LibrarySuggestPage() {
   }
 
   return (
-    <Stack gap={6}>
-      <Box>
-        <Text fontSize="2xl" fontWeight="bold">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <section>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.25rem' }}>
           Suggest a library item
-        </Text>
-        <Text color="gray.300">
+        </h1>
+        <p style={{ color: '#d1d5db' }}>
           This hits the FastAPI /library/suggest endpoint.
-        </Text>
-      </Box>
+        </p>
+      </section>
 
       <form
         onSubmit={(e) => {
@@ -65,56 +56,149 @@ function LibrarySuggestPage() {
           handleSubmit(e as unknown as SubmitEvent<HTMLFormElement>)
         }}
       >
-        <Stack gap={4}>
-          <Box>
-            <Text as="label" display="block" mb={1} fontWeight="medium">
-              Title <Text as="span" color="red.400">*</Text>
-            </Text>
-            <Input name="title" required />
-          </Box>
-          <Box>
-            <Text as="label" display="block" mb={1} fontWeight="medium">
-              URL <Text as="span" color="red.400">*</Text>
-            </Text>
-            <Input name="url" placeholder="https://…" required />
-          </Box>
-          <Box>
-            <Text as="label" display="block" mb={1} fontWeight="medium">
-              Type <Text as="span" color="red.400">*</Text>
-            </Text>
-            <Input name="item_type" placeholder="book, article, video…" required />
-          </Box>
-          <Box>
-            <Text as="label" display="block" mb={1} fontWeight="medium">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div>
+            <label
+              htmlFor="title"
+              style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+            >
+              Title <span style={{ color: '#f87171' }}>*</span>
+            </label>
+            <input
+              id="title"
+              name="title"
+              required
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #4b5563',
+                backgroundColor: '#020617',
+                color: '#f9fafb',
+              }}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="url"
+              style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+            >
+              URL <span style={{ color: '#f87171' }}>*</span>
+            </label>
+            <input
+              id="url"
+              name="url"
+              placeholder="https://…"
+              required
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #4b5563',
+                backgroundColor: '#020617',
+                color: '#f9fafb',
+              }}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="item_type"
+              style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+            >
+              Type <span style={{ color: '#f87171' }}>*</span>
+            </label>
+            <input
+              id="item_type"
+              name="item_type"
+              placeholder="book, article, video…"
+              required
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #4b5563',
+                backgroundColor: '#020617',
+                color: '#f9fafb',
+              }}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="note"
+              style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+            >
               Note
-            </Text>
-            <Textarea name="note" rows={3} />
-          </Box>
-          <Box>
-            <Text as="label" display="block" mb={1} fontWeight="medium">
+            </label>
+            <textarea
+              id="note"
+              name="note"
+              rows={3}
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #4b5563',
+                backgroundColor: '#020617',
+                color: '#f9fafb',
+                resize: 'vertical',
+              }}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="tags"
+              style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+            >
               Tags (comma separated)
-            </Text>
-            <Input name="tags" placeholder="ai, optimization, manufacturing" />
-          </Box>
-          <Button
+            </label>
+            <input
+              id="tags"
+              name="tags"
+              placeholder="ai, optimization, manufacturing"
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #4b5563',
+                backgroundColor: '#020617',
+                color: '#f9fafb',
+              }}
+            />
+          </div>
+          <button
             type="submit"
-            colorScheme="teal"
-            loading={mutation.isPending}
-            alignSelf="flex-start"
+            disabled={mutation.isPending}
+            style={{
+              padding: '0.5rem 1rem',
+              borderRadius: '9999px',
+              border: '1px solid #14b8a6',
+              backgroundColor: '#14b8a6',
+              color: '#0f172a',
+              fontWeight: 500,
+              cursor: mutation.isPending ? 'default' : 'pointer',
+              opacity: mutation.isPending ? 0.8 : 1,
+              alignSelf: 'flex-start',
+            }}
           >
             Submit suggestion
-          </Button>
+          </button>
           {mutation.isSuccess && (
-            <Alert.Root status="success">
-              <Alert.Title>Suggestion submitted</Alert.Title>
-              <Alert.Description>
-                Thanks! Your suggestion will be reviewed.
-              </Alert.Description>
-            </Alert.Root>
+            <div
+              style={{
+                border: '1px solid #16a34a',
+                backgroundColor: '#052e16',
+                padding: '0.75rem 1rem',
+                borderRadius: '0.5rem',
+                fontSize: '0.9rem',
+              }}
+            >
+              <strong>Suggestion submitted</strong>
+              <div>Thanks! Your suggestion will be reviewed.</div>
+            </div>
           )}
-        </Stack>
+        </div>
       </form>
-    </Stack>
+    </div>
   )
 }
 

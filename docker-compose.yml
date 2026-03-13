@@ -47,7 +47,6 @@ services:
     # Optional: only bind-mount source files if you want live reload:
     volumes:
       - ./frontend:/app
-      - /app/node_modules
     environment:
       - VITE_API_URL=http://localhost:3001
     depends_on:

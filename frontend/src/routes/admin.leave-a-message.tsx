@@ -1,14 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  Alert,
-  Box,
-  Button,
-  HStack,
-  Input,
-  Stack,
-  Text,
-} from '@chakra-ui/react'
 import { type SubmitEvent, useState } from 'react'
 import { fetchJson } from '../lib/api'
 
@@ -79,111 +70,173 @@ function LeaveAMessageAdminPage() {
   }
 
   return (
-    <Stack gap={6}>
-      <Box>
-        <Text fontSize="2xl" fontWeight="bold">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <section>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.25rem' }}>
           Leave-a-message admin
-        </Text>
-        <Text color="gray.300">
+        </h1>
+        <p style={{ color: '#d1d5db' }}>
           Approve or delete guestbook entries using the admin API key.
-        </Text>
-      </Box>
+        </p>
+      </section>
 
-      <Box as="form" onSubmit={handleKeySubmit}>
-        <HStack align="flex-end" gap={3}>
-          <Box>
-            <Text as="label" display="block" mb={1} fontWeight="medium">
-              Admin API key
-            </Text>
-            <Input
-              type="password"
-              value={adminKey}
-              onChange={(e) => setAdminKey(e.target.value)}
-            />
-          </Box>
-          <Button type="submit" colorScheme="teal">
-            Load entries
-          </Button>
-        </HStack>
-      </Box>
+      <form
+        onSubmit={handleKeySubmit}
+        style={{ display: 'flex', alignItems: 'flex-end', gap: '0.75rem' }}
+      >
+        <div>
+          <label
+            htmlFor="admin-key"
+            style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+          >
+            Admin API key
+          </label>
+          <input
+            id="admin-key"
+            type="password"
+            value={adminKey}
+            onChange={(e) => setAdminKey(e.target.value)}
+            style={{
+              padding: '0.5rem 0.75rem',
+              borderRadius: '0.375rem',
+              border: '1px solid #4b5563',
+              color: '#f9fafb',
+            }}
+          />
+        </div>
+        <button
+          type="submit"
+          style={{
+            padding: '0.5rem 0.75rem',
+            borderRadius: '9999px',
+            border: '1px solid #14b8a6',
+            backgroundColor: '#14b8a6',
+            color: '#0f172a',
+            fontWeight: 500,
+            cursor: 'pointer',
+          }}
+        >
+          Load entries
+        </button>
+      </form>
 
       {!adminKey && (
-        <Alert.Root status="info">
-          <Alert.Title>Enter admin key</Alert.Title>
-          <Alert.Description>
-            Provide the admin API key to manage entries.
-          </Alert.Description>
-        </Alert.Root>
+        <div
+          style={{
+            border: '1px solid #38bdf8',
+            backgroundColor: '#0b1120',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.9rem',
+          }}
+        >
+          <strong>Enter admin key</strong>
+          <div>Provide the admin API key to manage entries.</div>
+        </div>
       )}
 
       {entriesQuery.isLoading && (
-        <Text color="gray.400">Loading entries…</Text>
+        <p style={{ color: '#9ca3af' }}>Loading entries…</p>
       )}
 
       {entriesQuery.isError && adminKey && (
-        <Alert.Root status="error">
-          <Alert.Title>Could not load entries</Alert.Title>
-          <Alert.Description>
-            Check that the admin key is correct and the backend is running.
-          </Alert.Description>
-        </Alert.Root>
+        <div
+          style={{
+            border: '1px solid #b91c1c',
+            backgroundColor: '#450a0a',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.9rem',
+          }}
+        >
+          <strong>Could not load entries</strong>
+          <div>Check that the admin key is correct and the backend is running.</div>
+        </div>
       )}
 
-      <Stack gap={3}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {entriesQuery.data?.items.map((entry) => (
-          <Box
+          <div
             key={entry.id}
-            borderWidth="1px"
-            borderRadius="md"
-            p={3}
-            bg="gray.900"
+            style={{
+              border: '1px solid #374151',
+              borderRadius: '0.5rem',
+              padding: '0.75rem',
+              backgroundColor: '#030712',
+            }}
           >
-            <HStack justify="space-between" mb={1}>
-              <Text fontWeight="bold">{entry.name}</Text>
-              <Text fontSize="xs" color="gray.400">
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginBottom: '0.25rem',
+              }}
+            >
+              <span style={{ fontWeight: 600 }}>{entry.name}</span>
+              <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
                 #{entry.id}{' '}
                 {entry.is_rejected
                   ? '(rejected)'
                   : entry.is_approved
-                  ? '(approved)'
-                  : '(pending review)'}
-              </Text>
-            </HStack>
-            <Text mb={2}>{entry.message}</Text>
+                    ? '(approved)'
+                    : '(pending review)'}
+              </span>
+            </div>
+            <p style={{ marginBottom: '0.5rem' }}>{entry.message}</p>
             {entry.website && (
-              <Text mb={2} fontSize="sm" color="teal.300">
+              <p style={{ marginBottom: '0.5rem', fontSize: '0.875rem', color: '#5eead4' }}>
                 <a href={entry.website} target="_blank" rel="noopener noreferrer">
                   {entry.website}
                 </a>
-              </Text>
+              </p>
             )}
-            <Text fontSize="xs" color="gray.500" mb={2}>
+            <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>
               {new Date(entry.created_at).toLocaleString()}
-            </Text>
-            <HStack gap={2}>
-              <Button
-                size="sm"
-                colorScheme="teal"
-                variant={entry.is_approved && !entry.is_rejected ? 'solid' : 'outline'}
+            </p>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button
+                type="button"
                 onClick={() => approveMutation.mutate(entry.id)}
-                loading={approveMutation.isPending}
+                disabled={approveMutation.isPending}
+                style={{
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '9999px',
+                  border: entry.is_approved && !entry.is_rejected
+                    ? '1px solid #14b8a6'
+                    : '1px solid #4b5563',
+                  backgroundColor: entry.is_approved && !entry.is_rejected
+                    ? '#14b8a6'
+                    : 'transparent',
+                  color: entry.is_approved && !entry.is_rejected ? '#0f172a' : '#e5e7eb',
+                  fontSize: '0.8rem',
+                  cursor: approveMutation.isPending ? 'default' : 'pointer',
+                  opacity: approveMutation.isPending ? 0.7 : 1,
+                }}
               >
                 Approve
-              </Button>
-              <Button
-                size="sm"
-                colorScheme="red"
-                variant={entry.is_rejected ? 'solid' : 'outline'}
+              </button>
+              <button
+                type="button"
                 onClick={() => rejectMutation.mutate(entry.id)}
-                loading={rejectMutation.isPending}
+                disabled={rejectMutation.isPending}
+                style={{
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '9999px',
+                  border: entry.is_rejected ? '1px solid #ef4444' : '1px solid #4b5563',
+                  backgroundColor: entry.is_rejected ? '#ef4444' : 'transparent',
+                  color: entry.is_rejected ? '#0f172a' : '#e5e7eb',
+                  fontSize: '0.8rem',
+                  cursor: rejectMutation.isPending ? 'default' : 'pointer',
+                  opacity: rejectMutation.isPending ? 0.7 : 1,
+                }}
               >
                 Reject
-              </Button>
-            </HStack>
-          </Box>
+              </button>
+            </div>
+          </div>
         ))}
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   )
 }
 

@@ -1,16 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import {
-  Alert,
-  Box,
-  Button,
-  HStack,
-  Input,
-  Spinner,
-  Stack,
-  Table,
-  Text,
-} from '@chakra-ui/react'
 import { type ChangeEvent, useState } from 'react'
 import { fetchJson } from '../lib/api'
 
@@ -71,230 +60,415 @@ function AnalyticsAdminPage() {
   }
 
   return (
-    <Stack gap={6}>
-      <Box>
-        <Text fontSize="2xl" fontWeight="bold">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <section>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.25rem' }}>
           Analytics admin
-        </Text>
-        <Text color="gray.300">
-          View summary metrics and recent events from the FastAPI analytics
-          endpoints.
-        </Text>
-      </Box>
+        </h1>
+        <p style={{ color: '#d1d5db' }}>
+          View summary metrics and recent events from the FastAPI analytics endpoints.
+        </p>
+      </section>
 
-      <Box maxW="sm">
-        <Text as="label" display="block" mb={1} fontWeight="medium">
+      <section style={{ maxWidth: '24rem' }}>
+        <label
+          htmlFor="analytics-admin-key"
+          style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+        >
           Admin API key
-        </Text>
-        <HStack gap={2} align="flex-end">
-          <Input
+        </label>
+        <div
+          style={{
+            display: 'flex',
+            gap: '0.5rem',
+            alignItems: 'flex-end',
+          }}
+        >
+          <input
+            id="analytics-admin-key"
             type="password"
             value={adminKey}
             onChange={onAdminKeyChange}
+            style={{
+              flex: 1,
+              padding: '0.5rem 0.75rem',
+              borderRadius: '0.375rem',
+              border: '1px solid #4b5563',
+              color: '#f9fafb',
+            }}
           />
-          <Button
-            colorScheme="teal"
+          <button
+            type="button"
             onClick={() => {
               if (!adminKey) return
               summaryQuery.refetch()
               eventsQuery.refetch()
             }}
+            style={{
+              padding: '0.5rem 0.75rem',
+              borderRadius: '9999px',
+              border: '1px solid #14b8a6',
+              backgroundColor: '#14b8a6',
+              color: '#0f172a',
+              fontWeight: 500,
+              cursor: adminKey ? 'pointer' : 'default',
+              opacity: adminKey ? 1 : 0.7,
+            }}
           >
             Load analytics
-          </Button>
-        </HStack>
-      </Box>
+          </button>
+        </div>
+      </section>
 
       {!adminKey && (
-        <Alert.Root status="info">
-          <Alert.Title>Enter admin key</Alert.Title>
-          <Alert.Description>
-            Provide the admin API key to load analytics data.
-          </Alert.Description>
-        </Alert.Root>
+        <div
+          style={{
+            border: '1px solid #38bdf8',
+            backgroundColor: '#0b1120',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.9rem',
+          }}
+        >
+          <strong>Enter admin key</strong>
+          <div>Provide the admin API key to load analytics data.</div>
+        </div>
       )}
 
       {summaryQuery.isLoading && (
-        <HStack>
-          <Spinner />
-          <Text>Loading summary…</Text>
-        </HStack>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⏳</span>
+          <span>Loading summary…</span>
+        </div>
       )}
 
       {summaryQuery.isError && adminKey && (
-        <Alert.Root status="error">
-          <Alert.Title>Could not load summary</Alert.Title>
-        </Alert.Root>
+        <div
+          style={{
+            border: '1px solid #b91c1c',
+            backgroundColor: '#450a0a',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.9rem',
+          }}
+        >
+          <strong>Could not load summary</strong>
+        </div>
       )}
 
       {summaryQuery.data && (
-        <HStack gap={4}>
-          <Box>
-            <Text fontSize="sm" color="gray.400">
-              Today
-            </Text>
-            <Text fontSize="xl" fontWeight="bold">
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <div>
+            <div style={{ fontSize: '0.875rem', color: '#9ca3af' }}>Today</div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 700 }}>
               {summaryQuery.data.total_views_today}
-            </Text>
-          </Box>
-          <Box>
-            <Text fontSize="sm" color="gray.400">
-              Last 7 days
-            </Text>
-            <Text fontSize="xl" fontWeight="bold">
+            </div>
+          </div>
+          <div>
+            <div style={{ fontSize: '0.875rem', color: '#9ca3af' }}>Last 7 days</div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 700 }}>
               {summaryQuery.data.total_views_week}
-            </Text>
-          </Box>
-          <Box>
-            <Text fontSize="sm" color="gray.400">
-              All time
-            </Text>
-            <Text fontSize="xl" fontWeight="bold">
+            </div>
+          </div>
+          <div>
+            <div style={{ fontSize: '0.875rem', color: '#9ca3af' }}>All time</div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 700 }}>
               {summaryQuery.data.total_views_all_time}
-            </Text>
-          </Box>
-        </HStack>
+            </div>
+          </div>
+        </div>
       )}
 
       {summaryQuery.data && (
-        <Stack gap={4}>
-          <Box>
-            <Text fontWeight="semibold" mb={2}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <section>
+            <h2 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>
               Top pages (7 days)
-            </Text>
-            <Table.Root size="sm" variant="outline">
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader>Path</Table.ColumnHeader>
-                  <Table.ColumnHeader textAlign="end">Views</Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
+            </h2>
+            <table
+              style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                fontSize: '0.875rem',
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      textAlign: 'left',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    Path
+                  </th>
+                  <th
+                    style={{
+                      textAlign: 'right',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    Views
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
                 {summaryQuery.data.top_pages.map((p) => (
-                  <Table.Row key={p.path}>
-                    <Table.Cell>{p.path}</Table.Cell>
-                    <Table.Cell textAlign="end">{p.count}</Table.Cell>
-                  </Table.Row>
+                  <tr key={p.path}>
+                    <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                      {p.path}
+                    </td>
+                    <td
+                      style={{
+                        padding: '0.4rem 0.5rem',
+                        textAlign: 'right',
+                        borderBottom: '1px solid #111827',
+                      }}
+                    >
+                      {p.count}
+                    </td>
+                  </tr>
                 ))}
-              </Table.Body>
-            </Table.Root>
-          </Box>
+              </tbody>
+            </table>
+          </section>
 
-          <Box>
-            <Text fontWeight="semibold" mb={2}>
-              Top referrers
-            </Text>
-            <Table.Root size="sm" variant="outline">
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader>Referrer</Table.ColumnHeader>
-                  <Table.ColumnHeader textAlign="end">Views</Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
+          <section>
+            <h2 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Top referrers</h2>
+            <table
+              style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                fontSize: '0.875rem',
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      textAlign: 'left',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    Referrer
+                  </th>
+                  <th
+                    style={{
+                      textAlign: 'right',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    Views
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
                 {summaryQuery.data.top_referrers.map((r) => (
-                  <Table.Row key={r.referrer}>
-                    <Table.Cell>{r.referrer || '(direct)'}</Table.Cell>
-                    <Table.Cell textAlign="end">{r.count}</Table.Cell>
-                  </Table.Row>
+                  <tr key={r.referrer}>
+                    <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                      {r.referrer || '(direct)'}
+                    </td>
+                    <td
+                      style={{
+                        padding: '0.4rem 0.5rem',
+                        textAlign: 'right',
+                        borderBottom: '1px solid #111827',
+                      }}
+                    >
+                      {r.count}
+                    </td>
+                  </tr>
                 ))}
-              </Table.Body>
-            </Table.Root>
-          </Box>
+              </tbody>
+            </table>
+          </section>
 
-          <Box>
-            <Text fontWeight="semibold" mb={2}>
-              Device breakdown
-            </Text>
-            <Table.Root size="sm" variant="outline">
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader>Device</Table.ColumnHeader>
-                  <Table.ColumnHeader textAlign="end">Count</Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
+          <section>
+            <h2 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Device breakdown</h2>
+            <table
+              style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                fontSize: '0.875rem',
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      textAlign: 'left',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    Device
+                  </th>
+                  <th
+                    style={{
+                      textAlign: 'right',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    Count
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
                 {summaryQuery.data.device_breakdown.map((d) => (
-                  <Table.Row key={d.device}>
-                    <Table.Cell>{d.device || '(unknown)'}</Table.Cell>
-                    <Table.Cell textAlign="end">{d.count}</Table.Cell>
-                  </Table.Row>
+                  <tr key={d.device}>
+                    <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                      {d.device || '(unknown)'}
+                    </td>
+                    <td
+                      style={{
+                        padding: '0.4rem 0.5rem',
+                        textAlign: 'right',
+                        borderBottom: '1px solid #111827',
+                      }}
+                    >
+                      {d.count}
+                    </td>
+                  </tr>
                 ))}
-              </Table.Body>
-            </Table.Root>
-          </Box>
+              </tbody>
+            </table>
+          </section>
 
-          <Box>
-            <Text fontWeight="semibold" mb={2}>
-              Browser breakdown
-            </Text>
-            <Table.Root size="sm" variant="outline">
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader>Browser</Table.ColumnHeader>
-                  <Table.ColumnHeader textAlign="end">Count</Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
+          <section>
+            <h2 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Browser breakdown</h2>
+            <table
+              style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                fontSize: '0.875rem',
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      textAlign: 'left',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    Browser
+                  </th>
+                  <th
+                    style={{
+                      textAlign: 'right',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    Count
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
                 {summaryQuery.data.browser_breakdown.map((b) => (
-                  <Table.Row key={b.browser}>
-                    <Table.Cell>{b.browser || '(unknown)'}</Table.Cell>
-                    <Table.Cell textAlign="end">{b.count}</Table.Cell>
-                  </Table.Row>
+                  <tr key={b.browser}>
+                    <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                      {b.browser || '(unknown)'}
+                    </td>
+                    <td
+                      style={{
+                        padding: '0.4rem 0.5rem',
+                        textAlign: 'right',
+                        borderBottom: '1px solid #111827',
+                      }}
+                    >
+                      {b.count}
+                    </td>
+                  </tr>
                 ))}
-              </Table.Body>
-            </Table.Root>
-          </Box>
-        </Stack>
+              </tbody>
+            </table>
+          </section>
+        </div>
       )}
 
       {eventsQuery.isLoading && adminKey && (
-        <HStack>
-          <Spinner />
-          <Text>Loading events…</Text>
-        </HStack>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⏳</span>
+          <span>Loading events…</span>
+        </div>
       )}
 
       {eventsQuery.data && (
-        <Box>
-          <Text fontWeight="semibold" mb={2}>
-            Recent events
-          </Text>
-          <Table.Root size="sm" variant="line">
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeader>ID</Table.ColumnHeader>
-                <Table.ColumnHeader>Path</Table.ColumnHeader>
-                <Table.ColumnHeader>Referrer</Table.ColumnHeader>
-                <Table.ColumnHeader>Device</Table.ColumnHeader>
-                <Table.ColumnHeader>Browser</Table.ColumnHeader>
-                <Table.ColumnHeader>Country</Table.ColumnHeader>
-                <Table.ColumnHeader>Duration</Table.ColumnHeader>
-                <Table.ColumnHeader>Time</Table.ColumnHeader>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
+        <section>
+          <h2 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Recent events</h2>
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              fontSize: '0.875rem',
+            }}
+          >
+            <thead>
+              <tr>
+                {[
+                  'ID',
+                  'Path',
+                  'Referrer',
+                  'Device',
+                  'Browser',
+                  'Country',
+                  'Duration',
+                  'Time',
+                ].map((header) => (
+                  <th
+                    key={header}
+                    style={{
+                      textAlign: 'left',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #374151',
+                    }}
+                  >
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
               {eventsQuery.data.items.map((e) => (
-                <Table.Row key={e.id}>
-                  <Table.Cell>#{e.id}</Table.Cell>
-                  <Table.Cell>{e.path}</Table.Cell>
-                  <Table.Cell>{e.referrer || '(direct)'}</Table.Cell>
-                  <Table.Cell>{e.device_type || '(unknown)'}</Table.Cell>
-                  <Table.Cell>{e.browser || '(unknown)'}</Table.Cell>
-                  <Table.Cell>{e.country || '(unknown)'}</Table.Cell>
-                  <Table.Cell>
-                    {e.duration_seconds != null
-                      ? `${e.duration_seconds}s`
-                      : '-'}
-                  </Table.Cell>
-                  <Table.Cell>{new Date(e.created_at).toLocaleString()}</Table.Cell>
-                </Table.Row>
+                <tr key={e.id}>
+                  <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                    #{e.id}
+                  </td>
+                  <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                    {e.path}
+                  </td>
+                  <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                    {e.referrer || '(direct)'}
+                  </td>
+                  <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                    {e.device_type || '(unknown)'}
+                  </td>
+                  <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                    {e.browser || '(unknown)'}
+                  </td>
+                  <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                    {e.country || '(unknown)'}
+                  </td>
+                  <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                    {e.duration_seconds != null ? `${e.duration_seconds}s` : '-'}
+                  </td>
+                  <td style={{ padding: '0.4rem 0.5rem', borderBottom: '1px solid #111827' }}>
+                    {new Date(e.created_at).toLocaleString()}
+                  </td>
+                </tr>
               ))}
-            </Table.Body>
-          </Table.Root>
-        </Box>
+            </tbody>
+          </table>
+        </section>
       )}
-    </Stack>
+    </div>
   )
 }
 

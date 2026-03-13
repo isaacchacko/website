@@ -15,25 +15,21 @@ export function Navbar() {
   const currentPath = location.pathname
 
   return (
-    <header className="navbar">
-      <nav className="navbar__inner">
-
-        <div className="navbar__links">
-          {LINKS.map(link => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={
-                currentPath === link.to
-                  ? 'navbar__link navbar__link--active'
-                  : 'navbar__link'
-              }
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-      </nav>
+    <header
+      style={{
+        maxWidth: '100vh',
+        paddingLeft: '2.5rem',
+        paddingTop: '2.5rem',
+      }}
+    >
+      <h1
+        style={{
+          fontSize: '4.5rem',
+          fontFamily: 'Lateef, system-ui, sans-serif',
+        }}
+      >
+        isaacchacko.com
+      </h1>
     </header>
   )
 }

@@ -1,15 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import {
-  Box,
-  HStack,
-  Image,
-  SimpleGrid,
-  Spinner,
-  Stack,
-  Text,
-  Button,
-} from '@chakra-ui/react'
 import { useState } from 'react'
 import { fetchJson } from '../lib/api'
 
@@ -44,96 +34,146 @@ function PhotosPageComponent() {
   })
 
   return (
-    <Stack gap={6}>
-      <Text fontSize="2xl" fontWeight="bold">
-        Photo gallery
-      </Text>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Photo gallery</h1>
 
       {photosQuery.isLoading && (
-        <HStack>
-          <Spinner />
-          <Text>Loading photos…</Text>
-        </HStack>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⏳</span>
+          <span>Loading photos…</span>
+        </div>
       )}
 
       {photosQuery.isError && (
-        <Text color="red.300">Could not load photos.</Text>
+        <p style={{ color: '#feb2b2' }}>Could not load photos.</p>
       )}
 
-      <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+          gap: '1rem',
+        }}
+      >
         {photosQuery.data?.items.map((photo) => {
           const imageUrl = photo.url.startsWith('http')
             ? photo.url
             : `${import.meta.env.VITE_API_URL ?? 'http://localhost:3001'}${photo.url}`
           console.log("imageUrl: ", imageUrl);
           return (
-            <Box key={photo.id} borderWidth="1px" borderRadius="md" p={2} bg="gray.900">
-              <Image
+            <div
+              key={photo.id}
+              style={{
+                border: '1px solid #374151',
+                borderRadius: '0.5rem',
+                padding: '0.5rem',
+                backgroundColor: '#030712',
+              }}
+            >
+              <img
                 src={imageUrl}
                 alt={photo.original_filename}
-                borderRadius="md"
-                objectFit="cover"
-                w="100%"
-                h="200px"
+                style={{
+                  borderRadius: '0.5rem',
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: '200px',
+                }}
               />
-              <Stack mt={2} gap={1}>
-                <Text fontSize="xs" color="gray.400">
+              <div
+                style={{
+                  marginTop: '0.5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.25rem',
+                }}
+              >
+                <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
                   {photo.original_filename}
-                </Text>
+                </span>
                 {photo.caption && (
-                  <Text
-                    fontSize="sm"
-                    color="gray.300"
+                  <span
                     style={{
+                      fontSize: '0.875rem',
+                      color: '#d1d5db',
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
-                    }}
+                    } as React.CSSProperties}
                   >
                     {photo.caption}
-                  </Text>
+                  </span>
                 )}
-                <Text fontSize="xs" color="gray.500">
+                <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>
                   {new Date(photo.uploaded_at).toLocaleString()}
-                </Text>
-                <Text fontSize="xs" color="gray.500">
+                </span>
+                <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>
                   File: {photo.original_filename}
-                </Text>
-              </Stack>
-            </Box>
+                </span>
+              </div>
+            </div>
           )
         })}
-      </SimpleGrid>
+      </div>
 
       {photosQuery.data && photosQuery.data.pages > 1 && (
-        <HStack justify="space-between" mt={4}>
-          <Button
-            size="sm"
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '1rem',
+            alignItems: 'center',
+          }}
+        >
+          <button
+            type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1}
+            style={{
+              padding: '0.25rem 0.75rem',
+              borderRadius: '9999px',
+              border: '1px solid #4b5563',
+              backgroundColor: 'transparent',
+              color: '#e5e7eb',
+              cursor: page <= 1 ? 'default' : 'pointer',
+              opacity: page <= 1 ? 0.7 : 1,
+              fontSize: '0.875rem',
+            }}
           >
             Previous
-          </Button>
-          <Text fontSize="sm">
+          </button>
+          <span style={{ fontSize: '0.875rem' }}>
             Page {photosQuery.data.page} of {photosQuery.data.pages}
-          </Text>
-          <Button
-            size="sm"
+          </span>
+          <button
+            type="button"
             onClick={() =>
               setPage((p) =>
                 photosQuery.data ? Math.min(photosQuery.data.pages, p + 1) : p,
               )
             }
-            disabled={
-              !photosQuery.data || page >= photosQuery.data.pages
-            }
+            disabled={!photosQuery.data || page >= photosQuery.data.pages}
+            style={{
+              padding: '0.25rem 0.75rem',
+              borderRadius: '9999px',
+              border: '1px solid #4b5563',
+              backgroundColor: 'transparent',
+              color: '#e5e7eb',
+              cursor:
+                !photosQuery.data || page >= photosQuery.data.pages
+                  ? 'default'
+                  : 'pointer',
+              opacity:
+                !photosQuery.data || page >= photosQuery.data.pages ? 0.7 : 1,
+              fontSize: '0.875rem',
+            }}
           >
             Next
-          </Button>
-        </HStack>
+          </button>
+        </div>
       )}
-    </Stack>
+    </div>
   )
 }
 

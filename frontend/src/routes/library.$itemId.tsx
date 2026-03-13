@@ -1,17 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import {
-  Box,
-  Button,
-  Heading,
-  Image,
-  Link as ChakraLink,
-  Spinner,
-  Stack,
-  Tag,
-  Text,
-  HStack,
-} from '@chakra-ui/react'
 import { fetchJson } from '../lib/api'
 
 type LibraryItemPublic = {
@@ -44,15 +32,15 @@ function LibraryItemPage() {
 
   if (itemQuery.isLoading) {
     return (
-      <Stack>
-        <Spinner />
-        <Text>Loading item…</Text>
-      </Stack>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <span>⏳</span>
+        <span>Loading item…</span>
+      </div>
     )
   }
 
   if (itemQuery.isError || !itemQuery.data) {
-    return <Text color="red.300">Could not load library item.</Text>
+    return <p style={{ color: '#feb2b2' }}>Could not load library item.</p>
   }
 
   const item = itemQuery.data
@@ -64,59 +52,125 @@ function LibraryItemPage() {
     : null
 
   return (
-    <Stack gap={4}>
-      <Link to="/library" search={{ page: 1, sort: 'recent', tag: undefined, item_type: undefined }}>
-        <Button size="sm" variant="ghost">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Link
+        to="/library"
+        search={{ page: 1, sort: 'recent', tag: undefined, item_type: undefined }}
+      >
+        <button
+          type="button"
+          style={{
+            fontSize: '0.875rem',
+            padding: '0.25rem 0.75rem',
+            borderRadius: '9999px',
+            border: 'none',
+            background: 'transparent',
+            color: '#e5e7eb',
+            cursor: 'pointer',
+          }}
+        >
           ← Back to library
-        </Button>
+        </button>
       </Link>
 
-      <HStack justify="space-between" align="flex-start">
-        <Box flex={1}>
-          <HStack mb={2} gap={2} align="center">
-            <Heading size="lg">{item.title}</Heading>
-            <Tag.Root size="sm" variant="subtle">
-              <Tag.Label>{item.item_type}</Tag.Label>
-            </Tag.Root>
-          </HStack>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          gap: '1rem',
+        }}
+      >
+        <div style={{ flex: 1 }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              marginBottom: '0.5rem',
+            }}
+          >
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 700 }}>{item.title}</h1>
+            <span
+              style={{
+                display: 'inline-flex',
+                padding: '0.15rem 0.5rem',
+                borderRadius: '9999px',
+                backgroundColor: '#111827',
+                fontSize: '0.75rem',
+              }}
+            >
+              {item.item_type}
+            </span>
+          </div>
           {item.rating != null && item.show_rating && (
-            <Text color="yellow.300" mb={2}>
+            <p style={{ color: '#facc15', marginBottom: '0.5rem' }}>
               Rating: {item.rating}/5
-            </Text>
+            </p>
           )}
           {item.url && (
-            <ChakraLink href={item.url} target="_blank" rel="noopener noreferrer" color="teal.300" display="block" mb={2}>
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: '#5eead4',
+                display: 'block',
+                marginBottom: '0.5rem',
+                wordBreak: 'break-all',
+              }}
+            >
               {item.url}
-            </ChakraLink>
+            </a>
           )}
-          <Text color="gray.200" mb={2}>{item.note}</Text>
-          <Box mb={2}>
+          <p style={{ color: '#e5e7eb', marginBottom: '0.5rem' }}>{item.note}</p>
+          <div style={{ marginBottom: '0.5rem' }}>
             {item.tags.map((t) => (
-              <Tag.Root key={t} mr={2} mb={2}>
-                <Tag.Label>{t}</Tag.Label>
-              </Tag.Root>
+              <span
+                key={t}
+                style={{
+                  display: 'inline-flex',
+                  padding: '0.1rem 0.5rem',
+                  borderRadius: '9999px',
+                  backgroundColor: '#111827',
+                  fontSize: '0.75rem',
+                  marginRight: '0.5rem',
+                  marginBottom: '0.25rem',
+                }}
+              >
+                {t}
+              </span>
             ))}
-          </Box>
-          <HStack gap={4} fontSize="sm" color="gray.400">
-            <Text>Created: {new Date(item.created_at).toLocaleString()}</Text>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              fontSize: '0.875rem',
+              color: '#9ca3af',
+            }}
+          >
+            <span>Created: {new Date(item.created_at).toLocaleString()}</span>
             {item.updated_at && item.updated_at !== item.created_at && (
-              <Text>Updated: {new Date(item.updated_at).toLocaleString()}</Text>
+              <span>Updated: {new Date(item.updated_at).toLocaleString()}</span>
             )}
-          </HStack>
-        </Box>
+          </div>
+        </div>
         {imageUrl && (
-          <Box maxW="400px" ml={4}>
-            <Image
+          <div style={{ maxWidth: '400px', marginLeft: '1rem' }}>
+            <img
               src={imageUrl}
               alt={item.title}
-              borderRadius="md"
-              maxW="100%"
-              objectFit="contain"
+              style={{
+                borderRadius: '0.5rem',
+                maxWidth: '100%',
+                objectFit: 'contain',
+              }}
             />
-          </Box>
+          </div>
         )}
-      </HStack>
-    </Stack>
+      </div>
+    </div>
   )
 }
 

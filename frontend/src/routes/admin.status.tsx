@@ -1,14 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useMutation } from '@tanstack/react-query'
-import {
-  Alert,
-  Box,
-  Button,
-  Input,
-  Stack,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
 import { type SubmitEvent, useState } from 'react'
 import { fetchJson } from '../lib/api'
 
@@ -41,26 +32,43 @@ function StatusAdminPage() {
   }
 
   return (
-    <Stack gap={6}>
-      <Box>
-        <Alert.Root status="info">
-          <Alert.Title>Update status banner</Alert.Title>
-          <Alert.Description>
-            This calls POST /status/ with the admin API key.
-          </Alert.Description>
-        </Alert.Root>
-      </Box>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <section>
+        <div
+          style={{
+            border: '1px solid #38bdf8',
+            backgroundColor: '#0b1120',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.9rem',
+          }}
+        >
+          <strong>Update status banner</strong>
+          <div>This calls POST /status/ with the admin API key.</div>
+        </div>
+      </section>
 
-      <Box maxW="sm">
-        <Text as="label" display="block" mb={1} fontWeight="medium">
+      <div style={{ maxWidth: '24rem' }}>
+        <label
+          htmlFor="admin-key-status"
+          style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+        >
           Admin API key
-        </Text>
-        <Input
+        </label>
+        <input
+          id="admin-key-status"
           type="password"
           value={adminKey}
           onChange={(e) => setAdminKey(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '0.5rem 0.75rem',
+            borderRadius: '0.375rem',
+            border: '1px solid #4b5563',
+            color: '#f9fafb',
+          }}
         />
-      </Box>
+      </div>
 
       <form
         onSubmit={(e) => {
@@ -68,35 +76,75 @@ function StatusAdminPage() {
           handleSubmit(e as unknown as SubmitEvent<HTMLFormElement>)
         }}
       >
-        <Box>
-          <Text as="label" display="block" mb={1} fontWeight="medium">
-            New status text <Text as="span" color="red.400">*</Text>
-          </Text>
-          <Textarea name="text" rows={3} required />
-        </Box>
-        <Button
+        <div>
+          <label
+            htmlFor="status-text"
+            style={{ display: 'block', marginBottom: '0.25rem', fontWeight: 500 }}
+          >
+            New status text <span style={{ color: '#f87171' }}>*</span>
+          </label>
+          <textarea
+            id="status-text"
+            name="text"
+            rows={3}
+            required
+            style={{
+              width: '100%',
+              padding: '0.5rem 0.75rem',
+              borderRadius: '0.375rem',
+              border: '1px solid #4b5563',
+              color: '#f9fafb',
+              resize: 'vertical',
+            }}
+          />
+        </div>
+        <button
           type="submit"
-          colorScheme="teal"
-          mt={3}
-          loading={mutation.isPending}
-          disabled={!adminKey}
+          disabled={!adminKey || mutation.isPending}
+          style={{
+            marginTop: '0.75rem',
+            padding: '0.5rem 1rem',
+            borderRadius: '9999px',
+            border: '1px solid #14b8a6',
+            backgroundColor: !adminKey ? '#0f766e' : '#14b8a6',
+            color: '#0f172a',
+            fontWeight: 500,
+            cursor: !adminKey || mutation.isPending ? 'default' : 'pointer',
+            opacity: !adminKey || mutation.isPending ? 0.7 : 1,
+          }}
         >
           Save status
-        </Button>
+        </button>
       </form>
 
       {mutation.isSuccess && (
-        <Alert.Root status="success">
-          <Alert.Title>Status updated</Alert.Title>
-        </Alert.Root>
+        <div
+          style={{
+            border: '1px solid #16a34a',
+            backgroundColor: '#052e16',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.9rem',
+          }}
+        >
+          <strong>Status updated</strong>
+        </div>
       )}
 
       {mutation.isError && (
-        <Alert.Root status="error">
-          <Alert.Title>Could not update status</Alert.Title>
-        </Alert.Root>
+        <div
+          style={{
+            border: '1px solid #b91c1c',
+            backgroundColor: '#450a0a',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.9rem',
+          }}
+        >
+          <strong>Could not update status</strong>
+        </div>
       )}
-    </Stack>
+    </div>
   )
 }
 

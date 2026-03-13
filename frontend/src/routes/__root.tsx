@@ -1,14 +1,23 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { Box, Container } from '@chakra-ui/react'
 import { Navbar } from '../components/Navbar'
 
 export const Route = createRootRoute({
   component: () => (
-    <Box minH="100vh" bg="gray.950" color="gray.100">
+    <div
+      style={{
+        minHeight: '100vh',
+      }}
+    >
       <Navbar />
-      <Container maxW="4xl" py={8}>
+      <main
+        style={{
+          maxWidth: '56rem',
+          margin: '0 auto',
+          padding: '2rem 1rem',
+        }}
+      >
         <Outlet />
-      </Container>
-    </Box>
+      </main>
+    </div>
   ),
 })

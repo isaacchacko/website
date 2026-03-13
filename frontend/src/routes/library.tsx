@@ -1,17 +1,5 @@
 import { createFileRoute, Link, useSearch } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import {
-  Box,
-  Button,
-  HStack,
-  Heading,
-  Image,
-  SimpleGrid,
-  Spinner,
-  Stack,
-  Tag,
-  Text,
-} from '@chakra-ui/react'
 import { fetchJson } from '../lib/api'
 
 type LibraryItemPublic = {
@@ -74,14 +62,12 @@ function LibraryPageComponent() {
   })
 
   return (
-    <Stack gap={6}>
-      <Heading size="lg">Reading library</Heading>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Reading library</h1>
 
-      <HStack gap={4} align="center">
-        <Box>
-          <Text fontSize="sm" mb={1}>
-            Sort
-          </Text>
+      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <div>
+          <p style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>Sort</p>
           <select
             value={sort}
             onChange={(e) => {
@@ -96,7 +82,7 @@ function LibraryPageComponent() {
             style={{
               padding: '0.5rem',
               borderRadius: '0.375rem',
-              borderWidth: '1px',
+              border: '1px solid #4b5563',
               backgroundColor: '#111827',
               color: 'white',
               fontSize: '0.875rem',
@@ -106,49 +92,67 @@ function LibraryPageComponent() {
             <option value="alpha">Alphabetical</option>
             <option value="rating">Rating</option>
           </select>
-        </Box>
-      </HStack>
+        </div>
+      </div>
 
-      <Box>
-        <HStack gap={2} flexWrap="wrap">
-          {tagsQuery.isLoading && <Spinner size="sm" />}
+      <section>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0.5rem',
+            alignItems: 'center',
+          }}
+        >
+          {tagsQuery.isLoading && <span style={{ fontSize: '0.875rem' }}>Loading tags…</span>}
           {tagsQuery.data?.map((t) => (
             <Link
               key={t.id}
               to="/library"
               search={{ ...search, tag: t.name, page: 1 }}
             >
-              <Tag.Root
-                size="sm"
-                cursor="pointer"
-                variant={tag === t.name ? 'solid' : 'subtle'}
-                colorPalette={tag === t.name ? 'teal' : undefined}
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0.1rem 0.5rem',
+                  borderRadius: '9999px',
+                  fontSize: '0.75rem',
+                  cursor: 'pointer',
+                  backgroundColor: tag === t.name ? '#0f766e' : '#111827',
+                  color: tag === t.name ? '#e5e7eb' : '#d1d5db',
+                  border: tag === t.name ? '1px solid #14b8a6' : '1px solid transparent',
+                }}
               >
-                <Tag.Label>
-                  {t.name} ({t.count})
-                </Tag.Label>
-              </Tag.Root>
+                {t.name} ({t.count})
+              </span>
             </Link>
           ))}
-        </HStack>
-      </Box>
+        </div>
+      </section>
 
       {itemsQuery.isLoading && (
-        <HStack>
-          <Spinner />
-          <Text>Loading items…</Text>
-        </HStack>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⏳</span>
+          <span>Loading items…</span>
+        </div>
       )}
 
       {itemsQuery.isError && (
-        <Text color="red.300">Could not load library items.</Text>
+        <p style={{ color: '#feb2b2' }}>Could not load library items.</p>
       )}
 
       {itemsQuery.data && itemsQuery.data.items.length === 0 && (
-        <Text color="gray.400">No items match these filters.</Text>
+        <p style={{ color: '#9ca3af' }}>No items match these filters.</p>
       )}
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: '1rem',
+        }}
+      >
         {itemsQuery.data?.items.map((item) => (
           <Link
             key={item.id}
@@ -156,67 +160,118 @@ function LibraryPageComponent() {
             params={{ itemId: String(item.id) }}
             search={{} as any}
           >
-            <Box
-              borderWidth="1px"
-              borderRadius="md"
-              p={3}
-              bg="gray.900"
-              _hover={{ borderColor: 'teal.400' }}
+            <div
+              style={{
+                border: '1px solid #374151',
+                borderRadius: '0.5rem',
+                padding: '0.75rem',
+                backgroundColor: '#030712',
+              }}
             >
               {item.cover_image_url && (
-                <Image
-                  src={item.cover_image_url.startsWith('http') ? item.cover_image_url : `${import.meta.env.VITE_API_URL ?? 'http://localhost:3001'}${item.cover_image_url}`}
+                <img
+                  src={
+                    item.cover_image_url.startsWith('http')
+                      ? item.cover_image_url
+                      : `${import.meta.env.VITE_API_URL ?? 'http://localhost:3001'}${item.cover_image_url}`
+                  }
                   alt={item.title}
-                  borderRadius="md"
-                  mb={2}
-                  maxH="200px"
-                  objectFit="cover"
-                  w="100%"
+                  style={{
+                    borderRadius: '0.5rem',
+                    marginBottom: '0.5rem',
+                    maxHeight: '200px',
+                    objectFit: 'cover',
+                    width: '100%',
+                  }}
                 />
               )}
-              <HStack justify="space-between" mb={1}>
-                <Text fontWeight="bold">{item.title}</Text>
-                <Tag.Root size="sm" variant="subtle">
-                  <Tag.Label>{item.item_type}</Tag.Label>
-                </Tag.Root>
-              </HStack>
-              {item.rating != null && item.show_rating && (
-                <Text fontSize="sm" color="yellow.300">
-                  Rating: {item.rating}/5
-                </Text>
-              )}
-              <Text
-                mt={1}
-                fontSize="sm"
-                color="gray.300"
+              <div
                 style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: '0.25rem',
+                }}
+              >
+                <span style={{ fontWeight: 600 }}>{item.title}</span>
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    padding: '0.1rem 0.5rem',
+                    borderRadius: '9999px',
+                    fontSize: '0.75rem',
+                    backgroundColor: '#111827',
+                  }}
+                >
+                  {item.item_type}
+                </span>
+              </div>
+              {item.rating != null && item.show_rating && (
+                <p style={{ fontSize: '0.875rem', color: '#facc15' }}>
+                  Rating: {item.rating}/5
+                </p>
+              )}
+              <p
+                style={{
+                  marginTop: '0.25rem',
+                  fontSize: '0.875rem',
+                  color: '#d1d5db',
                   display: '-webkit-box',
                   WebkitLineClamp: 3,
                   WebkitBoxOrient: 'vertical',
                   overflow: 'hidden',
-                }}
+                } as React.CSSProperties}
               >
                 {item.note}
-              </Text>
-              <HStack mt={2} gap={2} flexWrap="wrap">
+              </p>
+              <div
+                style={{
+                  marginTop: '0.5rem',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '0.35rem',
+                }}
+              >
                 {item.tags.map((tagName) => (
-                  <Tag.Root key={tagName} size="sm" variant="subtle">
-                    <Tag.Label>{tagName}</Tag.Label>
-                  </Tag.Root>
+                  <span
+                    key={tagName}
+                    style={{
+                      display: 'inline-flex',
+                      padding: '0.1rem 0.5rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      backgroundColor: '#111827',
+                    }}
+                  >
+                    {tagName}
+                  </span>
                 ))}
-              </HStack>
-              <Text fontSize="xs" color="gray.500" mt={2}>
+              </div>
+              <p
+                style={{
+                  fontSize: '0.75rem',
+                  color: '#6b7280',
+                  marginTop: '0.5rem',
+                }}
+              >
                 {new Date(item.created_at).toLocaleDateString()}
-              </Text>
-            </Box>
+              </p>
+            </div>
           </Link>
         ))}
-      </SimpleGrid>
+      </div>
 
       {itemsQuery.data && itemsQuery.data.pages > 1 && (
-        <HStack justify="space-between" mt={4}>
-          <Button
-            size="sm"
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '1rem',
+            alignItems: 'center',
+          }}
+        >
+          <button
+            type="button"
             onClick={() =>
               (window.location.href = `/library?page=${Math.max(
                 1,
@@ -224,14 +279,24 @@ function LibraryPageComponent() {
               )}&sort=${sort}`)
             }
             disabled={page <= 1}
+            style={{
+              padding: '0.25rem 0.75rem',
+              borderRadius: '9999px',
+              border: '1px solid #4b5563',
+              backgroundColor: 'transparent',
+              color: '#e5e7eb',
+              cursor: page <= 1 ? 'default' : 'pointer',
+              opacity: page <= 1 ? 0.7 : 1,
+              fontSize: '0.875rem',
+            }}
           >
             Previous
-          </Button>
-          <Text fontSize="sm">
+          </button>
+          <span style={{ fontSize: '0.875rem' }}>
             Page {itemsQuery.data.page} of {itemsQuery.data.pages}
-          </Text>
-          <Button
-            size="sm"
+          </span>
+          <button
+            type="button"
             onClick={() =>
               (window.location.href = `/library?page=${Math.min(
                 itemsQuery.data!.pages,
@@ -239,12 +304,22 @@ function LibraryPageComponent() {
               )}&sort=${sort}`)
             }
             disabled={page >= itemsQuery.data.pages}
+            style={{
+              padding: '0.25rem 0.75rem',
+              borderRadius: '9999px',
+              border: '1px solid #4b5563',
+              backgroundColor: 'transparent',
+              color: '#e5e7eb',
+              cursor: page >= itemsQuery.data.pages ? 'default' : 'pointer',
+              opacity: page >= itemsQuery.data.pages ? 0.7 : 1,
+              fontSize: '0.875rem',
+            }}
           >
             Next
-          </Button>
-        </HStack>
+          </button>
+        </div>
       )}
-    </Stack>
+    </div>
   )
 }
 
